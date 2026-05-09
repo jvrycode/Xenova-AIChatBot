@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import { useLocation } from 'react-router-dom';
 import './Auth.css';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 const Auth: React.FC = () => {
     const location = useLocation();
-    const navigate = useNavigate();
     
     const [isLogin, setIsLogin] = useState(true);
     

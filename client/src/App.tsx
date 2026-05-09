@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import io, { Socket } from 'socket.io-client';
 import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
