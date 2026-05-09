@@ -1,4 +1,4 @@
-# AI Chatbot
+# XENOVA 
 
 AI-powered chatbot with ChatGPT-style interface, real-time messaging, and conversation management.
 
