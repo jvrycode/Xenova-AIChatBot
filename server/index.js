@@ -18,10 +18,7 @@ const Project = require('./models/Project');
 const app = express();
 const server = http.createServer(app);
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow any origin for Vercel preview/production URLs
-    callback(null, true);
-  },
+  origin: true, // Reflects the exact origin of the request (needed for credentials: true)
   credentials: true
 };
 
