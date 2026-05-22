@@ -78,8 +78,8 @@ const Auth: React.FC = () => {
         <div className="auth-container">
             <div className="auth-card">
                 <div className="auth-header">
-
-                    <p>{isLogin ? 'Welcome to Xenova' : 'Sign up to start chatting with Xenova.'}</p>
+                    <h1 className="auth-title">{isLogin ? 'Welcome back' : 'Create an account'}</h1>
+                    <p className="auth-subtitle">{isLogin ? 'Log in to continue to Xenova.' : 'Sign up to start chatting with Xenova.'}</p>
                 </div>
 
                 {error && <div className="auth-error">{error}</div>}

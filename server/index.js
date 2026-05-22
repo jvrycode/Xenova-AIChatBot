@@ -165,31 +165,31 @@ io.on('connection', (socket) => {
           }));
           conversations.set(conversationId, formattedMessages);
         } else {
-           return socket.emit('error', { message: 'Conversation not found' });
+          return socket.emit('error', { message: 'Conversation not found' });
         }
       }
 
       const conversation = conversations.get(conversationId);
-      
+
       // Find the index of the edited message
       // Note: messageId might be the ID string from client, which we constructed as `${conversationId}-${index}`
       // OR it could be the numeric timestamp ID. We should try to find it.
       let editedIndex = -1;
-      
+
       // Check if messageId is an index format
       if (typeof messageId === 'string' && messageId.includes('-')) {
         const parts = messageId.split('-');
         const idx = parseInt(parts[parts.length - 1], 10);
         if (!isNaN(idx) && idx >= 0 && idx < conversation.length) {
-            editedIndex = idx;
+          editedIndex = idx;
         }
       }
-      
+
       // Fallback: search by content matching if it's the exact same message but we lost the ID mapping
       // Or just assume it's finding the first user message that matches
       if (editedIndex === -1) {
-          // This fallback is risky if messages are identical, but we'll try to find by string ID match
-          editedIndex = conversation.findIndex(m => String(m.id) === String(messageId));
+        // This fallback is risky if messages are identical, but we'll try to find by string ID match
+        editedIndex = conversation.findIndex(m => String(m.id) === String(messageId));
       }
 
       if (editedIndex === -1) {
@@ -204,9 +204,9 @@ io.on('connection', (socket) => {
 
       // Emit an intermediate update to show the user's edit immediately
       io.to(conversationId).emit('conversation-updated', conversation.map(m => ({
-          role: m.type,
-          content: m.content,
-          timestamp: m.timestamp
+        role: m.type,
+        content: m.content,
+        timestamp: m.timestamp
       })));
 
       // 3. Generate new AI response based on truncated history
@@ -223,14 +223,14 @@ io.on('connection', (socket) => {
         content: aiResponse,
         timestamp: new Date().toISOString()
       };
-      
+
       conversation.push(aiMessage);
 
       // 5. Update MongoDB
       if (!isGuest) {
         try {
           let dbConversation = await Conversation.findOne({ conversationId });
-          
+
           if (dbConversation) {
             // Truncate DB messages to match our updated memory array
             // Since we reconstructed the conversation, we can just replace the whole array
@@ -239,7 +239,7 @@ io.on('connection', (socket) => {
               content: m.content,
               timestamp: new Date(m.timestamp)
             }));
-            
+
             await dbConversation.save();
             console.log(`✅ Saved edited conversation ${conversationId} to database`);
           }
@@ -252,9 +252,9 @@ io.on('connection', (socket) => {
 
       // 6. Emit the final updated conversation to the client
       io.to(conversationId).emit('conversation-updated', conversation.map(m => ({
-          role: m.type,
-          content: m.content,
-          timestamp: m.timestamp
+        role: m.type,
+        content: m.content,
+        timestamp: m.timestamp
       })));
 
     } catch (error) {
@@ -293,7 +293,7 @@ async function generateAIResponse(message, conversationHistory) {
     // Add conversation history (last 10 messages, excluding current)
     const historyWithoutCurrent = conversationHistory.slice(0, -1);
     const recentHistory = historyWithoutCurrent.slice(-10);
-    
+
     recentHistory.forEach(msg => {
       messages.push({
         role: msg.type === 'user' ? 'user' : 'assistant',
@@ -303,7 +303,7 @@ async function generateAIResponse(message, conversationHistory) {
 
     let hasImage = false;
     const currentMsg = conversationHistory[conversationHistory.length - 1];
-    
+
     if (currentMsg && currentMsg.image) {
       hasImage = true;
       messages.push({
@@ -339,11 +339,11 @@ async function generateAIResponse(message, conversationHistory) {
 // Mock AI responses for testing
 function getMockResponse(message, conversationHistory = []) {
   const lowerMessage = message.toLowerCase();
-  
+
   // Check if the last message in history has an image
   const lastMsg = conversationHistory.length > 0 ? conversationHistory[conversationHistory.length - 1] : null;
   if (lastMsg && lastMsg.image) {
-      return "I received your image! However, the Groq API key configured for this server currently does not have access to the Vision models (they may be disabled or restricted on this tier). Therefore, I can't analyze the image right now. But I'm still here to chat!";
+    return "I received your image! However, the Groq API key configured for this server currently does not have access to the Vision models (they may be disabled or restricted on this tier). Therefore, I can't analyze the image right now. But I'm still here to chat!";
   }
 
   // Greeting responses (use word boundaries to avoid matching substrings like "Philippines")

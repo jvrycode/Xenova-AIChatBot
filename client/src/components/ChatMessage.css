@@ -71,7 +71,7 @@
 
 .markdown-body strong {
     font-weight: 600;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .markdown-body ul, .markdown-body ol {
@@ -85,7 +85,7 @@
 
 /* Inline Code */
 .markdown-body code:not([class*="language-"]) {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--border-subtle);
     padding: 2px 6px;
     border-radius: 4px;
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;

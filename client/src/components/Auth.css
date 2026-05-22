@@ -5,22 +5,24 @@
   min-height: 100vh;
   width: 100vw;
   background-color: var(--bg-primary);
+  background: radial-gradient(circle at 50% 50%, var(--bg-secondary) 0%, var(--bg-primary) 100%);
   font-family: var(--font-family);
 }
 
 .auth-card {
   width: 100%;
-  max-width: 380px;
-  padding: 40px 36px;
+  max-width: 420px;
+  padding: 48px 40px;
   background: var(--bg-secondary);
-  border-radius: 12px;
-  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
   animation: fadeIn var(--transition-base);
 }
 
 .auth-header {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 /* Logo image — same asset as the sidebar */
@@ -35,9 +37,17 @@
   object-fit: contain;
 }
 
-.auth-header p {
+.auth-title {
+  color: var(--text-primary);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 15px;
   margin: 0;
   line-height: 1.5;
 }
@@ -74,17 +84,18 @@
 .form-group input {
   background: var(--bg-primary);
   border: 1px solid var(--border-subtle);
-  padding: 10px 14px;
-  border-radius: 6px;
+  padding: 14px 16px;
+  border-radius: 12px;
   color: var(--text-primary);
   font-family: var(--font-family);
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
-  transition: border-color var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
 .form-group input:focus {
-  border-color: #3a3a3a;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
 }
 
 .form-group input::placeholder {
@@ -93,25 +104,32 @@
 
 /* Primary action button — white with dark text (no green) */
 .submit-btn {
-  background-color: #e7e7e7;
-  color: #121212;
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
   border: none;
-  padding: 12px;
-  border-radius: 6px;
+  padding: 14px;
+  border-radius: 12px;
   font-family: var(--font-family);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color var(--transition-fast);
-  margin-top: 6px;
+  transition: all var(--transition-fast);
+  margin-top: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 44px;
+  height: 48px;
 }
 
 .submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
   background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: none;
 }
 
 .submit-btn:disabled {
